@@ -1,12 +1,70 @@
 group pierwszy;
 
-int(i,j) ::= <<
-MOV A,#<i> ; po raz <j>
 
+
+program(name,deklaracje) ::= <<
+  <deklaracje;separator="\n"> 
+  start: 
+  <name;separator="\n"> 
 >>
 
-dodaj(p1, p2) ::= "<p1> <p2>... i nie zawaham się go użyć..."
+
+blok(expressions,declarations) ::= <<
+  <declarations;separator="\n"> 
+  start: 
+  <expressions;separator="\n"> 
+>>
+
+if(e1, e2, e3) ::= <<
+<e1>
+JE label_else
+<e2>
+JMP label_endif
+label_else:
+<e3>
+label_endif:
+>>
+
+int(i) ::= <<
+  MOV A,<i>
+>>
+
+id(n) ::= <<
+  MOV A,[<n>]
+>>
+
+add(p1, p2) ::= <<
+  <p2>
+  PUSH A
+  <p1>
+  POP B
+  ADD A,B
+>>
+
+sub(p1, p2) ::= <<
+  <p2>
+  PUSH A
+  <p1>
+  POP B
+  SUB A,B
+>>
+
+mul(p1, p2) ::= <<
+  <p2>
+  PUSH A
+  <p1>
+  MUL B
+  ADD A,B
+>>
+
+div(p1, p2) ::= <<
+  <p2>
+  PUSH A
+  <p1>
+  POP B
+  DIV A,B
+>>
 
 dek(n) ::= <<
-DD <n>
+  DD <n>
 >>
